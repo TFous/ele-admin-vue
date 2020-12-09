@@ -21,6 +21,7 @@ const adminList = () => import(/* webpackChunkName: "adminList" */ '../views/dat
 const orderList = () => import(/* webpackChunkName: "orderList" */ '../views/dataManage/orderList.vue')
 const userList = () => import(/* webpackChunkName: "userList" */ '../views/dataManage/userList.vue')
 const setting = () => import(/* webpackChunkName: "setting" */ '../views/setting/setting.vue')
+const categoryList = () => import(/* webpackChunkName: "setting" */ '../views/dataManage/categoryList.vue')
 // const adminList = () => import(/* webpackChunkName: "addMerchants" */ '../views/merchants/adminList.vue')
 
 Vue.use(Router)
@@ -84,16 +85,10 @@ const router = new Router({
           component: foodList
         },
         {
-          path: 'setting.html',
-          name: 'setting',
-          meta: ['设置', '管理员设置'],
-          component: setting
-        },
-        {
-          path: 'adminList.html',
-          name: 'adminList',
-          meta: ['数据管理', '管理员列表'],
-          component: adminList
+          path: 'categoryList.html',
+          name: 'categoryList',
+          meta: ['数据管理', '类别列表'],
+          component: categoryList
         },
         {
           path: 'orderList.html',

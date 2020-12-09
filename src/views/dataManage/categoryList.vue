@@ -1,5 +1,5 @@
 <!--
- * @Descripttion: 内别列表
+ * @Descripttion: 类别列表
  * @version: 1.0
  * @Author: 笑佛弥勒
  * @Date: 2020-01-22 16:01:53
@@ -8,13 +8,19 @@
  -->
 <template>
   <div class="user-list-wrapper">
+    <section style="padding:12px;text-align: right">
+      <el-button type="success" plain @click="showAddLayer">新增</el-button>
+    </section>
     <el-table :data="userList" style="width: 100%">
-      <el-table-column align="center" label="用户id" prop="id" width="150" />
-      <el-table-column align="center" label="用户名称" prop="user_name" />
-      <el-table-column align="center" label="注册邮箱" prop="email" />
-      <el-table-column align="center" label="注册时间">
+      <el-table-column align="center" label="名称" prop="name"/>
+      <el-table-column align="center" label="新增时间">
         <template slot-scope="scope">
           {{ scope.row.created_at | _formatDate }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="操作">
+        <template slot-scope="scope">
+          <el-button type="warning" plain>修改</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -26,6 +32,22 @@
       class="absoulute"
       @current-change="changPage"
     />
+
+    <el-dialog title="新增" :append-to-body="true" :visible.sync="dialogFormVisible">
+      <el-form :model="form">
+        <el-form-item label="名称"
+                      label-width="120px"
+                      :rules="[
+                    { required: true, message: '不能为空'},
+                  ]">
+          <el-input v-model="form.name" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -35,6 +57,10 @@ export default {
   data() {
     return {
       userList: [],
+      dialogFormVisible: false,
+      form: {
+        name: null
+      },
       page: 1,
       pageSize: 20,
       totalPage: 0
@@ -49,6 +75,19 @@ export default {
     }
   },
   methods: {
+    submitForm(){
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          alert('submit!');
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
+    showAddLayer(){
+      this.dialogFormVisible = true
+    },
     _getUserList() {
       const params = {
         page: this.page,
